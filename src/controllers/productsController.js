@@ -6,6 +6,10 @@ const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
 
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
+function writeFileJson() {
+	fs.writeFileSync(productsFilePath,JSON.stringify(products),'utf-8');
+} 
+
 const controller = {
 	// Root - Show all products
 	index: (req, res) => {
@@ -41,7 +45,7 @@ const controller = {
 			category
 		}
 		products.push(dataNew);
-		fs.writeFileSync(productsFilePath,JSON.stringify(products),'utf-8');
+		writeFileJson();
 		res.render('products',{
 			products
 		});
@@ -49,11 +53,27 @@ const controller = {
 
 	// Update - Form to edit
 	edit: (req, res) => {
-		// Do the magic
+		let idProduct = req.params.id;
+		productToEdit = products.find(item => item.id == idProduct);
+		res.render('product-edit-form',{productToEdit});
 	},
 	// Update - Method to update
 	update: (req, res) => {
-		// Do the magic
+		const {name, description, price, discount,image, category} = req.body;
+		idProduct = req.params.id;
+		products.map(item =>{
+			if(item.id == idProduct){
+				item.name = name, 
+				item.description = description,
+				item.price = price, 
+				item.discount = discount,
+				item.name = null, 
+				item.category = category
+			}
+			products.push(item);
+		});		
+		writeFileJson();
+		res.redirect("/");		
 	},
 
 	// Delete - Delete one product from DB
