@@ -19,7 +19,7 @@
 						<h2 class="products-title">Basado en tu última visita</h2>
 					</div>
 					<!-- Show the "visited" products -->
-					<% visited.forEach(product=> {%>
+					<% products.forEach(product=> {%>
 						<% if(product.category=='visited' ){%>
 							<div class="col-12 col-sm-6 col-lg-3">
 								<section class="product-box">
@@ -56,7 +56,7 @@
 						<h2 class="products-title">Ofertas</h2>
 					</div>
 					<!-- Show the "in-sale" products -->
-					<% visited.forEach(product=> {%>
+					<% products.forEach(product=> {%>
 						<% if(product.category=='in-sale' ){%>
 							<div class="col-12 col-sm-6 col-lg-3">
 								<section class="product-box">
