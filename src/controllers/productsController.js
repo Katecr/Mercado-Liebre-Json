@@ -78,7 +78,17 @@ const controller = {
 
 	// Delete - Delete one product from DB
 	destroy : (req, res) => {
-		// Do the magic
+		idProduct = req.params.id;
+		const productsNews = [];
+		products.map(item =>{
+			if(item.id != idProduct){
+				productsNews.push(item);
+			}			
+		});		
+		fs.writeFileSync(productsFilePath,JSON.stringify(productsNews),'utf-8');
+		res.render('index',{
+			products:productsNews
+		});	
 	}
 };
 
